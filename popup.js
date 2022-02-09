@@ -1,24 +1,29 @@
-// Initialize butotn with users's prefered color
-let changeColor = document.getElementById("changeColor");
-
-chrome.storage.sync.get("color", ({ color }) => {
-  changeColor.style.backgroundColor = color;
+let officeMode = document.getElementById("officeMode");
+console.log(officeMode);
+chrome.storage.sync.get("hiden", ({ hiden }) => {
+  officeMode.checked = hiden;
 });
-
-// When the button is clicked, inject setPageBackgroundColor into current page
-changeColor.addEventListener("click", async () => {
+$(officeMode).change(async (e) => {
+  e.preventDefault();
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-
+  // console.log(e.target.checked);
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
-    function: setPageBackgroundColor,
+    function: togglePageState(e.target),
   });
 });
+officeMode.addEventListener("click", async (e) => {});
 
 // The body of this function will be execuetd as a content script inside the
 // current page
-function setPageBackgroundColor() {
-  chrome.storage.sync.get("color", ({ color }) => {
-    document.body.style.backgroundColor = color;
+function togglePageState(target) {
+  chrome.storage.sync.get("hiden", ({ hiden }) => {
+    const subTitle = document.getElementsByClassName("MSTY2ZpsdupobywLEfx9u");
+    const banner = document.getElementsByClassName("_2L5G9B5yaoqW3IegiYN-FL");
+    console.log(target.checked);
+
+    chrome.storage.sync.set({ hiden: !target.checked });
+    $(subTitle).toggle(!target.checked);
+    $(banner).toggle(!target.checked);
   });
 }
