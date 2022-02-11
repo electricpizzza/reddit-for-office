@@ -18,6 +18,8 @@ function togglePageState() {
     chrome.storage.sync.set({ hiden: !hiden });
     $(".MSTY2ZpsdupobywLEfx9u").toggle(hiden);
     $("._2L5G9B5yaoqW3IegiYN-FL").toggle(hiden);
-    $("img").toggle(hiden);
+    $(
+      "._10K5i7NW6qcm-UoCtpB3aK _3LwUIE7yX7CZQKmD2L87vf._1F02c6Yw0dfhdWwl99UrYn._1fiOgAxLiYfEU41C1NOX9B._1IKtbRloF_LV1hPqMzP3MC"
+    ).click();
   });
 }
